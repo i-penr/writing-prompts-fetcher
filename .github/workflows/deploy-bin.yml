@@ -1,0 +1,24 @@
+name: "Deploy golang binary to release"
+
+on:
+  tags:
+    - "v[0-9]+.[0-9]+.[0-9]+"
+
+jobs:
+  deploy-binary:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-go@v6
+
+      - name: Build binary
+        run: go build main.go
+
+    - name: Upload binary to release
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: main
+        tag: ${{ github.ref }}
+        overwrite: true
