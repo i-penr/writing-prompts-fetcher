@@ -18,10 +18,7 @@ jobs:
       - name: Build binary
         run: go build main.go
 
-      - name: Upload binary to release
-        uses: svenstaro/upload-release-action@v2
+      - name: Release
+        uses: softprops/action-gh-release@v3
         with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: main
-          tag: ${{ github.ref }}
-          overwrite: true
+          files: main
